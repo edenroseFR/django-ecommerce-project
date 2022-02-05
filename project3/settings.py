@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv('.env')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,12 +25,12 @@ SITE_ID = 1
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+DEBUG = os.getenv('DEBUG', False)
 
-ALLOWED_HOSTS = [os.environ.get('C9_HOSTNAME'), 'conor-dev-summaries.herokuapp.com']
+ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -97,7 +100,7 @@ else:
         }
     }
 
-DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) }
+# DATABASES = {'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -150,29 +153,29 @@ STRIPE_SECRET = os.getenv('STRIPE_SECRET')
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 # TO RUN LOCALLY HAVE THESE TWO UNCOMMENTED #
-# STATIC_URL = '/static/'
-# MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 # TO RUN ON HEROKU HAVE THESE UNCOMMENTED #
-AWS_S3_OBJECT_PARAMETERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'CacheControl': 'max-age=94608000',
-    }
+# AWS_S3_OBJECT_PARAMETERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+#         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+#         'CacheControl': 'max-age=94608000',
+#     }
 
-AWS_STORAGE_BUCKET_NAME = 'conor-ecommerce'
-AWS_S3_REGION_NAME = 'eu-west-1'
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = 'conor-ecommerce'
+# AWS_S3_REGION_NAME = 'eu-west-1'
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+# STATICFILES_LOCATION = 'static'
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
-MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+# MEDIAFILES_LOCATION = 'media'
+# DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+# MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
    
  
